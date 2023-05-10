@@ -10,18 +10,12 @@
  * Specialization of stream reader through file namely
  */
 class WordsFileReader : WordsStreamReaderImpl {
-  WordsFileReader(
-      const std::string &input_file,
-      const std::function<bool(char)> &is_separator) noexcept(false);
-
-  std::ifstream file_;
-  const std::function<bool(char)> is_separator_;
-
 public:
   /**
    * Fabric method for a reader
    * @param input_file - name of an input file
-   * @param is_separator - method to check whether provided char could be considered a separator
+   * @param is_separator - method to check whether provided char could be
+   * considered a separator
    * @return reader object
    */
   static std::unique_ptr<WordsFileReader>
@@ -29,6 +23,14 @@ public:
          const std::function<bool(char)> &is_separator);
 
   std::string nextWord();
+
+private:
+  WordsFileReader(
+      const std::string &input_file,
+      const std::function<bool(char)> &is_separator) noexcept(false);
+
+  std::ifstream file_;
+  const std::function<bool(char)> is_separator_;
 };
 
 #endif // WORDSCOUNTER_WORDSFILEREADER_H
