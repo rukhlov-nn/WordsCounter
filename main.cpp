@@ -7,8 +7,6 @@
 #include "WordsCounterFlashableSortedBy.h"
 #include "WordsFileReader.h"
 
-#define FOREVER for (; true;)
-
 int main(int argc, char *argv[]) {
   // check and prepare args
   constexpr static int expected_parameters_count = 3;
@@ -30,7 +28,7 @@ int main(int argc, char *argv[]) {
 
   // read input file while counting words
   WordsCounterFlashableSortedBy<std::less<>, std::greater<>> words_counter;
-  FOREVER {
+  while (true) {
     auto next_word = words_file_reader->nextWord();
     if (next_word.empty()) {
       break;
