@@ -27,7 +27,9 @@ int main(int argc, char *argv[]) {
   }
 
   // read input file while counting words
-  WordsCounterFlashableSortedBy<std::less<>, std::greater<>> words_counter;
+  using WordsSorter = std::less<>;
+  using CountsSorter = std::greater<>;
+  WordsCounterFlashableSortedBy<WordsSorter, CountsSorter> words_counter;
   while (true) {
     auto next_word = words_file_reader->nextWord();
     if (next_word.empty()) {
