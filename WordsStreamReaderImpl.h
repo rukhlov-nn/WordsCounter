@@ -19,11 +19,10 @@ public:
    * @return next word string
    */
   template <typename StreamT>
-  static std::string nextWord(StreamT &stream,
+  static std::optional<std::string> nextWord(StreamT &stream,
                               const std::function<bool(char)> &is_separator) {
     stream >> std::noskipws;
 
-    std::string result;
     std::list<char> chars_for_result;
 
     char ch;
@@ -51,6 +50,11 @@ public:
       }
     }
 
+    if (chars_for_result.empty()) {
+      return std::nullopt;
+    }
+
+    std::string result;
     result.reserve(chars_for_result.size());
     for (const char ch : chars_for_result) {
       result.push_back(ch);

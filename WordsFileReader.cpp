@@ -30,6 +30,6 @@ WordsFileReader::create(const std::string &input_file,
   return words_file_reader;
 }
 
-std::string WordsFileReader::nextWord() {
+std::optional<std::string> WordsFileReader::nextWord() {
   return WordsStreamReaderImpl::nextWord(file_, is_separator_);
 }

@@ -30,7 +30,7 @@ public:
    * Wrapper around the implementation, see parent class
    * @return
    */
-  std::string nextWord();
+  std::optional<std::string> nextWord();
 
 private:
   WordsFileReader(

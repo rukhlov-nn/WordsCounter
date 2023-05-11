@@ -26,11 +26,11 @@ TEST_CASE("Business logic") {
     WordsCounterFlashableSortedBy<std::less<>, std::greater<>> words_counter;
     while (true) {
       auto next_word = WordsStreamReaderImpl::nextWord(ss_read, is_separator);
-      if (next_word.empty()) {
+      if (!next_word) {
         break;
       }
-      Format::to_lower(next_word);
-      words_counter.consider(next_word);
+      Format::to_lower(*next_word);
+      words_counter.consider(*next_word);
     }
 
     std::ostringstream ss_write;

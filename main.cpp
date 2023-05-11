@@ -32,11 +32,11 @@ int main(int argc, char *argv[]) {
   WordsCounterFlashableSortedBy<WordsSorter, CountsSorter> words_counter;
   while (true) {
     auto next_word = words_file_reader->nextWord();
-    if (next_word.empty()) {
+    if (!next_word) {
       break;
     }
-    Format::to_lower(next_word);
-    words_counter.consider(next_word);
+    Format::to_lower(*next_word);
+    words_counter.consider(*next_word);
   }
 
   // save results of counting
