@@ -26,6 +26,10 @@ public:
   create(const std::string &input_file,
          const std::function<bool(char)> &is_separator);
 
+  /**
+   * Wrapper around the implementation, see parent class
+   * @return
+   */
   std::string nextWord();
 
 private:
