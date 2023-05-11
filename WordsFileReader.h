@@ -10,6 +10,10 @@
  * Specialization of stream reader through file namely
  */
 class WordsFileReader : WordsStreamReaderImpl {
+  template <typename T, typename... Args>
+  friend inline typename std::_MakeUniq<T>::__single_object
+  std::make_unique(Args &&...);
+
 public:
   /**
    * Fabric method for a reader

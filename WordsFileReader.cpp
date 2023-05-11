@@ -22,7 +22,8 @@ WordsFileReader::create(const std::string &input_file,
                         const std::function<bool(char)> &is_separator) {
   std::unique_ptr<WordsFileReader> words_file_reader;
   try {
-    words_file_reader.reset(new WordsFileReader(input_file, is_separator));
+    words_file_reader =
+        std::make_unique<WordsFileReader>(input_file, is_separator);
   } catch (...) {
     std::cout << "File reading is unavailable!" << std::endl;
   }
