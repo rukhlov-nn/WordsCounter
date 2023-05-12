@@ -26,8 +26,8 @@ public:
   void flushTo(StreamT &stream,
                const std::function<std::string(const std::string &, int)>
                    &formatted_line) {
-    SortableBase::sort();
-    for (const auto &[count, words] : SortableBase::sorted_words_by_sorted_count_) {
+    const auto sorted_words_by_sorted_count = SortableBase::getSorted();
+    for (const auto &[count, words] : sorted_words_by_sorted_count) {
       for (const auto &word : words) {
         stream << formatted_line(word, count) << '\n';
       }

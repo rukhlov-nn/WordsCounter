@@ -15,23 +15,20 @@ template <typename WordsSorterT, typename CountsSorterT>
 class WordsCounterSortableBy : public WordsCounter {
 public:
   /**
-   * Method to sort counts and words
+   * Method to get sorted counts and words
+   * @return sorted container of counts and words
    */
-  void sort() {
-    for (auto count_and_word_iter = count_by_word_.cbegin();
-         count_and_word_iter != count_by_word_.cend();
-         /**/) {
-      sorted_words_by_sorted_count_[count_and_word_iter->second].emplace(
-          count_and_word_iter->first);
-
-      // not to double up the memory consumption
-      count_and_word_iter = count_by_word_.erase(count_and_word_iter);
-    }
-  }
-
-protected:
   std::map<int, std::set<std::string, WordsSorterT>, CountsSorterT>
-      sorted_words_by_sorted_count_;
+  getSorted() {
+    std::map<int, std::set<std::string, WordsSorterT>, CountsSorterT>
+        sorted_words_by_sorted_count;
+    for (auto count_and_word_iter = count_by_word_.cbegin();
+         count_and_word_iter != count_by_word_.cend(); ++count_and_word_iter) {
+      sorted_words_by_sorted_count[count_and_word_iter->second].emplace(
+          count_and_word_iter->first);
+    }
+    return sorted_words_by_sorted_count;
+  }
 };
 
 #endif // WORDSCOUNTER_WORDSCOUNTERSORTABLE_H
