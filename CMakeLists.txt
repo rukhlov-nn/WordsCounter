@@ -24,4 +24,4 @@ add_executable(WordsCounter
         main.cpp
 
         tests/Tests.cpp
-        WordsCounterSortable.h WordsCounterFlashableSortedBy.h WordsStreamReaderImpl.h)
+        WordsCounterSortable.h WordsCounterSortedFlushable.h WordsStreamReaderImpl.h)

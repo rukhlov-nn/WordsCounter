@@ -4,7 +4,7 @@
 #include <iostream>
 
 #include "Format.h"
-#include "WordsCounterFlashableSortedBy.h"
+#include "WordsCounterSortedFlushable.h"
 #include "WordsFileReader.h"
 
 int main(int argc, char *argv[]) {
@@ -27,22 +27,23 @@ int main(int argc, char *argv[]) {
   }
 
   // read input file while counting words
-  using WordsSorter = std::less<>;
-  using CountsSorter = std::greater<>;
-  WordsCounterFlashableSortedBy<WordsSorter, CountsSorter> words_counter;
+  WordsCounterSortedFlushable words_counter;
   while (true) {
     auto next_word = words_file_reader->nextWord();
     if (!next_word) {
       break;
     }
     Format::to_lower(*next_word);
-    words_counter.consider(*next_word);
+    words_counter.consider(std::move(*next_word));
   }
 
   // save results of counting
   std::filesystem::remove(output_file);
   std::ofstream output_file_stream(output_file);
-  words_counter.flushTo(output_file_stream, Format::count_space_word);
+  const auto words_sorter = std::less<>{};
+  const auto counts_sorter = std::greater<>{};
+  words_counter.flushTo(output_file_stream, words_sorter, counts_sorter,
+                        Format::count_space_word);
 
   return 0;
 }

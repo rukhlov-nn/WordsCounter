@@ -7,27 +7,28 @@
 #include "WordsCounter.h"
 
 /**
- * Template class that can sort red words and their counts
- * @tparam WordsSorterT - sorting type for words
- * @tparam CountsSorterT - sorting type for counts
+ * Class that can sort red words and their counts
  */
-template <typename WordsSorterT, typename CountsSorterT>
-class WordsCounterSortableBy : public WordsCounter {
+class WordsCounterSortable : public WordsCounter {
 public:
   /**
    * Method to get sorted counts and words
    * @return sorted container of counts and words
    */
-  std::map<int, std::set<std::string, WordsSorterT>, CountsSorterT>
-  getSorted() {
-    std::map<int, std::set<std::string, WordsSorterT>, CountsSorterT>
-        sorted_words_by_sorted_count;
-    for (auto count_and_word_iter = count_by_word_.cbegin();
-         count_and_word_iter != count_by_word_.cend(); ++count_and_word_iter) {
-      sorted_words_by_sorted_count[count_and_word_iter->second].emplace(
-          count_and_word_iter->first);
-    }
-    return sorted_words_by_sorted_count;
+  template <typename WordsSorterT, typename CountsSorterT>
+  std::vector<std::pair<std::string_view, int>>
+  getSorted(WordsSorterT words_sorter, CountsSorterT counts_sorter) {
+    std::vector<std::pair<std::string_view, int>> sorted_words_and_counts{
+        count_by_word_.cbegin(), count_by_word_.cend()};
+    std::sort(sorted_words_and_counts.begin(), sorted_words_and_counts.end(),
+              [&](auto a, auto b) {
+                if (a.second != b.second) {
+                  return counts_sorter(a.second, b.second);
+                }
+                return words_sorter(a.first, b.first);
+              });
+
+    return sorted_words_and_counts;
   }
 };
 

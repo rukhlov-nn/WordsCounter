@@ -6,7 +6,7 @@
 
 namespace Format {
 void to_lower(std::string &str);
-std::string count_space_word(const std::string &word, int count);
+std::string count_space_word(std::string_view word, int count);
 }; // namespace Format
 
 #endif // WORDSCOUNTER_FORMAT_H

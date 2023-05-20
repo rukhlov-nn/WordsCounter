@@ -8,6 +8,6 @@ void Format::to_lower(std::string &str) {
   }
 }
 
-std::string Format::count_space_word(const std::string &word, int count) {
-  return std::to_string(count) + ' ' + word;
+std::string Format::count_space_word(std::string_view word, int count) {
+  return std::to_string(count) + ' ' + std::string(word);
 }

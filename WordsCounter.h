@@ -9,10 +9,10 @@
 class WordsCounter {
 public:
   /**
-   * Take a new word into consideration
+   * Absorb a new word into consideration
    * @param new_word - a word to consider
    */
-  void consider(const std::string &new_word);
+  void consider(std::string &&new_word);
 
 protected:
   std::unordered_map<std::string, int> count_by_word_;

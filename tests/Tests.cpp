@@ -3,7 +3,7 @@
 #include "doctest/doctest.h"
 
 #include "../Format.h"
-#include "../WordsCounterFlashableSortedBy.h"
+#include "../WordsCounterSortedFlushable.h"
 #include "../WordsStreamReaderImpl.h"
 
 TEST_CASE("Business logic") {
@@ -23,18 +23,21 @@ TEST_CASE("Business logic") {
 
     const auto is_separator = [](const char ch) { return !std::isalpha(ch); };
 
-    WordsCounterFlashableSortedBy<std::less<>, std::greater<>> words_counter;
+    WordsCounterSortedFlushable words_counter;
     while (true) {
       auto next_word = WordsStreamReaderImpl::nextWord(ss_read, is_separator);
       if (!next_word) {
         break;
       }
       Format::to_lower(*next_word);
-      words_counter.consider(*next_word);
+      words_counter.consider(std::move(*next_word));
     }
 
     std::ostringstream ss_write;
-    words_counter.flushTo(ss_write, Format::count_space_word);
+    const auto &words_sorter = std::less<>{};
+    const auto &counts_sorter= std::greater<>{};
+    words_counter.flushTo(ss_write, words_sorter, counts_sorter,
+                          Format::count_space_word);
 
     CHECK_EQ(ss_write.str(), out);
   }
